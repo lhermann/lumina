@@ -3,12 +3,15 @@
     <div
       class="w-full mx-auto flex flex-wrap items-center justify-between py-2 px-16"
     >
-      <a class="flex items-center no-underline hover:no-underline" href="#">
+      <nuxt-link
+        class="flex items-center no-underline hover:no-underline"
+        to="/"
+      >
         <Logo class="h-8" />
         <h1 class="pl-4 font-semibold text-2xl lg:text-4xl">
           {{ pageTitle | uppercase }}
         </h1>
-      </a>
+      </nuxt-link>
 
       <div class="block lg:hidden pr-4">
         <button

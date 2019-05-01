@@ -268,13 +268,13 @@ export default {
   components: {
     Unit
   },
-  async asyncData({ app: { contentful } }) {
-    const landing = await contentful.getEntries({
+  async asyncData({ app }) {
+    const landing = await app.$contentful.getEntries({
       locale: "ms-MY",
       content_type: "page",
       "fields.key[match]": "landing"
     });
-    const units = await contentful.getEntries({
+    const units = await app.$contentful.getEntries({
       locale: "ms-MY",
       content_type: "unit"
     });

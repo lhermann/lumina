@@ -19,8 +19,8 @@ export const getters = {
  ************************************/
 
 export const actions = {
-  async nuxtServerInit({ commit }, { app }) {
-    const response = await app.contentful.getEntries({
+  async nuxtServerInit({ commit }) {
+    const response = await this.$contentful.getEntries({
       locale: "ms-MY",
       content_type: "website"
     });
