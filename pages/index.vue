@@ -15,8 +15,7 @@
             :is="tag(item.nodeType)"
             :class="{
               'leading-normal text-2xl': item.nodeType === 'paragraph',
-              'my-4 text-5xl font-bold leading-tight':
-                item.nodeType === 'heading-1'
+              'my-4': item.nodeType === 'heading-1'
             }"
             class="leading-normal text-2xl"
           >
@@ -43,7 +42,7 @@
         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
           <g
             transform="translate(-2.000000, 44.000000)"
-            fill="#FFFFFF"
+            fill="#f7fafc"
             fill-rule="nonzero"
           >
             <path
@@ -62,7 +61,7 @@
           </g>
           <g
             transform="translate(-4.000000, 76.000000)"
-            fill="#FFFFFF"
+            fill="#f7fafc"
             fill-rule="nonzero"
           >
             <path
@@ -72,6 +71,23 @@
         </g>
       </svg>
     </div>
+
+    <!-- Units -->
+    <section class="bg-gray-100 py-16">
+      <div class="container px-8 md:px-16">
+        <header class="mb-8">
+          <h1 class="my-2 text-center text-gray-800">
+            Lessons
+          </h1>
+          <div class="h-1 mx-auto gradient w-64 opacity-25 rounded-t"></div>
+        </header>
+        <div class="flex flex-col items-center">
+          <unit v-for="item in units" :key="item.fields.number" :unit="item" />
+        </div>
+      </div>
+    </section>
+
+    <hr />
 
     <!-- Cards -->
     <section class="bg-white py-8">
@@ -244,18 +260,27 @@
 </template>
 
 <script>
+import Unit from "~/components/Unit";
 import first from "lodash/first";
 import { mapGetters } from "vuex";
 
 export default {
+  components: {
+    Unit
+  },
   async asyncData({ app: { contentful } }) {
-    const response = await contentful.getEntries({
+    const landing = await contentful.getEntries({
       locale: "ms-MY",
       content_type: "page",
       "fields.key[match]": "landing"
     });
+    const units = await contentful.getEntries({
+      locale: "ms-MY",
+      content_type: "unit"
+    });
     return {
-      content: first(response.items).fields.content.content
+      content: first(landing.items).fields.content.content,
+      units: units.items
     };
   },
   head() {
@@ -282,7 +307,7 @@ export default {
 </script>
 
 <style scoped>
-/*h1 {
+h1 {
   @apply text-5xl font-bold leading-tight;
-}*/
+}
 </style>

@@ -24,7 +24,6 @@ export const actions = {
       locale: "ms-MY",
       content_type: "website"
     });
-    console.log(response.items[0].fields);
     commit("setWebsite", response.items[0].fields);
   }
 };

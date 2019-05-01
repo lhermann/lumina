@@ -1,7 +1,7 @@
 <template>
   <nav id="header" class="w-full text-white">
     <div
-      class="w-full mx-auto flex flex-wrap items-center justify-between py-2 px-8"
+      class="w-full mx-auto flex flex-wrap items-center justify-between py-2 px-16"
     >
       <a class="flex items-center no-underline hover:no-underline" href="#">
         <Logo class="h-8" />
@@ -71,6 +71,6 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 /* Styles */
 </style>
