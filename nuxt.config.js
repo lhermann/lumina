@@ -1,42 +1,42 @@
-import pkg from './package'
+import pkg from "./package";
 
 export default {
-  mode: 'universal',
+  mode: "universal",
 
   /*
    ** Headers of the page
    */
   head: {
-    title: pkg.name,
+    title: process.env.NUXT_ENV_TITLE || pkg.name,
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: pkg.description }
+      { charset: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { hid: "description", name: "description", content: pkg.description }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
   },
 
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: '#fff' },
+  loading: { color: "#fff" },
 
   /*
    ** Global CSS
    */
-  css: ['~/assets/css/tailwind.css'],
+  css: ["~/assets/css/tailwind.css"],
 
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ["~/plugins/filters.js", "~/plugins/contentful.js"],
 
   /*
    ** Nuxt.js modules
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    "@nuxtjs/axios"
   ],
   /*
    ** Axios module configuration
@@ -52,10 +52,10 @@ export default {
     cache: true,
     postcss: {
       plugins: [
-        require('tailwindcss')('tailwind.config.js'),
-        require('autoprefixer')
+        require("tailwindcss")("tailwind.config.js"),
+        require("autoprefixer")
       ]
-    },
-    extend(config, ctx) {}
+    }
+    // extend(config, ctx) {}
   }
-}
+};

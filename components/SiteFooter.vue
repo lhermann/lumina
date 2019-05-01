@@ -5,7 +5,9 @@
         <div class="flex-1 mb-6">
           <a class="flex items-center no-underline hover:no-underline" href="#">
             <Logo class="h-8" />
-            <h1 class="pl-4 font-semibold text-2xl lg:text-4xl">LUMINA</h1>
+            <h1 class="pl-4 font-semibold text-2xl lg:text-4xl">
+              {{ pageTitle || uppercase }}
+            </h1>
           </a>
         </div>
 
@@ -113,9 +115,15 @@
 
 <script>
 import Logo from "./Logo";
+import { mapGetters } from "vuex";
 
 export default {
-  components: { Logo }
+  components: { Logo },
+  computed: {
+    ...mapGetters({
+      pageTitle: "title"
+    })
+  }
 };
 </script>
 

@@ -1,38 +1,39 @@
 <template>
   <section>
     <!--Hero-->
-    <div class="pt-24 text-white">
+    <div class="pt-16 pb-3 text-white">
       <div
         class="container px-3 mx-auto flex flex-wrap flex-col md:flex-row items-center px-8"
       >
         <!--Left Col-->
         <div
-          class="flex flex-col w-full md:w-2/5 justify-center items-start text-center md:text-left"
+          class="flex flex-col w-full md:w-1/2 justify-center items-start text-center md:text-left md:px-12"
         >
-          <p class="uppercase tracking-loose w-full">What business are you?</p>
-          <h1 class="my-4 text-5xl font-bold leading-tight">
-            Main Hero Message to sell yourself!
-          </h1>
-          <p class="leading-normal text-2xl mb-8">
-            Sub-hero message, not too long and not too short. Make it just
-            right!
-          </p>
-
-          <button
-            class="mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg"
+          <component
+            v-for="(item, i) in content"
+            :key="i"
+            :is="tag(item.nodeType)"
+            :class="{
+              'leading-normal text-2xl': item.nodeType === 'paragraph',
+              'my-4 text-5xl font-bold leading-tight':
+                item.nodeType === 'heading-1'
+            }"
+            class="leading-normal text-2xl"
           >
-            Subscribe
-          </button>
+            {{ item.content[0].value }}
+          </component>
         </div>
+
         <!--Right Col-->
-        <div class="w-full md:w-3/5 py-6 text-center">
-          <img class="w-full md:w-4/5 z-50" src="/hero.png" />
+        <div class="w-full md:w-1/2 md:px-12 text-center">
+          <!-- <img class="w-full md:w-4/5 z-50" src="/hero.png" /> -->
+          <img class="inline" src="/hero-illustration.svg" />
         </div>
       </div>
     </div>
 
     <!-- Divider -->
-    <div class="relative -mt-12 lg:-mt-24">
+    <div class="relative">
       <svg
         viewBox="0 0 1428 174"
         version="1.1"
@@ -243,13 +244,45 @@
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import first from "lodash/first";
+import { mapGetters } from "vuex";
 
 export default {
-  components: {
-    Logo
+  async asyncData({ app: { contentful } }) {
+    const response = await contentful.getEntries({
+      locale: "ms-MY",
+      content_type: "page",
+      "fields.key[match]": "landing"
+    });
+    return {
+      content: first(response.items).fields.content.content
+    };
+  },
+  head() {
+    return {
+      title: this.pageTitle
+    };
+  },
+  computed: {
+    ...mapGetters({
+      pageTitle: "title"
+    })
+  },
+  methods: {
+    tag(nodeType) {
+      switch (nodeType) {
+        case "paragraph":
+          return "p";
+        case "heading-1":
+          return "h1";
+      }
+    }
   }
-}
+};
 </script>
 
-<style></style>
+<style scoped>
+/*h1 {
+  @apply text-5xl font-bold leading-tight;
+}*/
+</style>

@@ -2,6 +2,8 @@
 
 > Based on nuxt
 
+Template thanks to: [https://www.tailwindtoolbox.com/templates/landing-page]()
+
 ## Build Setup
 
 ```bash
