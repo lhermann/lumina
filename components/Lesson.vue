@@ -6,7 +6,7 @@
     <button
       class="w-full flex items-center bg-white rounded shadow-md px-4"
       :class="{ 'opacity-50': isDummy, 'hover:bg-gray-100': !isDummy }"
-      @click="$emit('click')"
+      @click="onClick"
     >
       <div class="w-10 mr-4">
         <div
@@ -57,11 +57,19 @@ export default {
     isDummy() {
       return Boolean(this.lesson.dummy);
     },
+    id() {
+      return get(this.lesson, "sys.id", "");
+    },
     number() {
       return get(this.lesson, "fields.number");
     },
     title() {
       return get(this.lesson, "fields.title");
+    }
+  },
+  methods: {
+    onClick() {
+      this.$router.push(`/lesson/${this.id}`);
     }
   }
 };

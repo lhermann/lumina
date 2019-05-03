@@ -155,7 +155,13 @@ export default {
       const id = get(this.section, "sys.id");
       if (id) {
         const passphrase = this.passphrase;
+        // Store the passphrase for this section
         this.$store.dispatch("auth/addPassphrase", { id, passphrase });
+        // store the passphrase for all lessons
+        this.lessons.forEach(item => {
+          const id = get(item, "sys.id");
+          this.$store.dispatch("auth/addPassphrase", { id, passphrase });
+        });
       }
     },
     createDummyLessons(count) {
