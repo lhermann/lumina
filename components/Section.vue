@@ -14,11 +14,11 @@
           <span class="text-base text-gray-400 mr-2">Section {{ number }}</span>
           {{ title }}
         </h3>
-        <button class="bg-gray-200 text-gray-600 py-1 px-2 rounded">
+        <div class="bg-gray-200 text-gray-600 py-1 px-2 rounded">
           <span v-if="isLocked">Unlock</span>
           <icon-collapse v-else-if="isExpanded" />
           <icon-expand v-else />
-        </button>
+        </div>
       </button>
     </header>
     <ul v-if="!isLocked && isExpanded">
@@ -40,20 +40,29 @@
       </div>
       <div class="font-semibold text-gray-400 py-1">
         <span>{{ lessonCount }} Lessons</span>
-        <span v-if="pending">Loading ...</span>
       </div>
     </div>
-    <modal :active.sync="modalActive" title="Unlock Section" action="Unlock">
+
+    <!-- Passphrase Modal -->
+    <modal
+      :active.sync="modalActive"
+      title="Unlock Section"
+      action="Unlock"
+      @action="onUnlock"
+    >
       <label class="font-semibold" for="password">
         Enter the Passphrase for Section {{ number }}
       </label>
       <input
-        v-modal="password"
+        v-model="passphrase"
         id="password"
-        class="block mx-auto border border-blue-300 rounded py-2 px-3 text-grey-700 shadow-inner mt-2"
+        class="block mx-auto border border-blue-300 rounded py-2 px-3 text-grey-700 shadow-inner my-2"
         type="password"
         size="40"
       />
+      <div v-if="wrongPassphrase" class="text-red-500">
+        <icon-close class="inline" /> Wrong Passphrase!
+      </div>
     </modal>
   </article>
 </template>
@@ -66,7 +75,10 @@ import IconClass from "~/components/icons/Class";
 import IconDoneAll from "~/components/icons/DoneAll";
 import IconExpand from "~/components/icons/Expand";
 import IconCollapse from "~/components/icons/Collapse";
+import IconClose from "~/components/icons/Close";
+import sha256 from "crypto-js/sha256";
 import get from "lodash/get";
+import fill from "lodash/fill";
 
 export default {
   components: {
@@ -76,7 +88,8 @@ export default {
     IconClass,
     IconDoneAll,
     IconExpand,
-    IconCollapse
+    IconCollapse,
+    IconClose
   },
   props: {
     section: { type: Object, default: null }
@@ -85,17 +98,23 @@ export default {
     return {
       isExpanded: true,
       pending: true,
-      lessons: [],
+      lessons: this.createDummyLessons(this.lessonCount),
       modalActive: false,
-      password: ""
+      passphrase: "",
+      locked: true,
+      wrongPassphrase: false
     };
   },
   computed: {
     isLocked() {
-      return !!get(this.section, "fields.hash");
+      if (this.hash) return this.locked;
+      return false;
     },
     isDone() {
       return false;
+    },
+    id() {
+      return get(this.section, "sys.id");
     },
     number() {
       return get(this.section, "fields.number");
@@ -105,6 +124,12 @@ export default {
     },
     lessonCount() {
       return get(this.section, "fields.lessons", []).length;
+    },
+    hash() {
+      return get(this.section, "fields.hash");
+    },
+    storedPassphrase() {
+      return this.$store.getters["auth/passphrase"](this.id);
     }
   },
   methods: {
@@ -114,12 +139,44 @@ export default {
       } else {
         this.isExpanded = !this.isExpanded;
       }
+    },
+    onUnlock() {
+      if (sha256(this.passphrase).toString() === this.hash) {
+        this.locked = false;
+        this.modalActive = false;
+        this.isExpanded = true;
+        this.persistPassphrase();
+      } else {
+        this.wrongPassphrase = true;
+      }
+      this.passphrase = "";
+    },
+    persistPassphrase() {
+      const id = get(this.section, "sys.id");
+      if (id) {
+        const passphrase = this.passphrase;
+        this.$store.dispatch("auth/addPassphrase", { id, passphrase });
+      }
+    },
+    createDummyLessons(count) {
+      return fill(Array(count)).map((a, i) => ({
+        number: "d" + i,
+        dummy: true
+      }));
     }
   },
-  async created() {
-    const id = get(this.section, "sys.id");
-    if (id) {
-      const response = await this.$contentful.getEntry(id);
+  watch: {
+    modalActive(newState) {
+      if (!newState) this.wrongPassphrase = false;
+    },
+    storedPassphrase(phrase) {
+      if (sha256(phrase).toString() === this.hash) this.locked = false;
+    }
+  },
+  async mounted() {
+    // Load lessons
+    if (this.id) {
+      const response = await this.$contentful.getEntry(this.id);
       this.lessons = get(response, "fields.lessons", []);
       this.pending = false;
     }

@@ -16,6 +16,7 @@
     "contentful": "^7.5.0",
     "cross-env": "^5.2.0",
     "crypto-js": "^3.1.9-1",
+    "immortal-db": "^1.0.2",
     "lodash": "^4.17.11",
     "nuxt": "^2.4.0"
   },

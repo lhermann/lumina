@@ -1,3 +1,5 @@
+import get from "lodash/get";
+
 /*
  * initial state
  ************************************/
@@ -11,7 +13,7 @@ export const state = () => ({
  ************************************/
 
 export const getters = {
-  title: state => state.website.title
+  title: state => get(state, "website.title", "")
 };
 
 /*
@@ -19,12 +21,16 @@ export const getters = {
  ************************************/
 
 export const actions = {
-  async nuxtServerInit({ commit }) {
-    const response = await this.$contentful.getEntries({
+  async nuxtServerInit({ commit }, { app }) {
+    const response = await app.$contentful.getEntries({
       locale: "ms-MY",
       content_type: "website"
     });
-    commit("setWebsite", response.items[0].fields);
+    commit("setWebsite", get(response.items[0], "fields", {}));
+  },
+  initImmortalDB({ dispatch }) {
+    // console.log("initImmortalDB");
+    dispatch("auth/recover");
   }
 };
 

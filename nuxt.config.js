@@ -29,14 +29,18 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ["~/plugins/filters.js", "~/plugins/contentful.js"],
+  plugins: [
+    "~/plugins/filters.js",
+    "~/plugins/contentful.js",
+    "~/plugins/immortal-db.js"
+  ],
 
   /*
    ** Nuxt.js modules
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    "@nuxtjs/axios"
+    // "@nuxtjs/axios"
   ],
   /*
    ** Axios module configuration

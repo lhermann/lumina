@@ -4,7 +4,8 @@
       <div class="connect border-gray-400 h-4"></div>
     </div>
     <button
-      class="w-full flex items-center bg-white rounded shadow-md px-4 hover:bg-gray-100"
+      class="w-full flex items-center bg-white rounded shadow-md px-4"
+      :class="{ 'opacity-50': isDummy, 'hover:bg-gray-100': !isDummy }"
       @click="$emit('click')"
     >
       <div class="w-10 mr-4">
@@ -32,7 +33,7 @@
         <span class="font-semibold text-gray-400 mr-2">#{{ number }}</span>
         {{ title }}
       </div>
-      <icon-arrow-right />
+      <icon-arrow-right v-show="!isDummy" />
     </button>
   </div>
 </template>
@@ -53,6 +54,9 @@ export default {
     priorDone: { type: Boolean, default: false }
   },
   computed: {
+    isDummy() {
+      return Boolean(this.lesson.dummy);
+    },
     number() {
       return get(this.lesson, "fields.number");
     },

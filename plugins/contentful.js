@@ -7,7 +7,7 @@ const config = {
   accessToken: process.env.NUXT_ENV_ACCESS_TOKEN
 };
 
-export default ({ app }, inject) => {
+export default (context, inject) => {
   // Set the function directly on the context.app object
   // app.contentful = contentful.createClient(config);
   inject("contentful", contentful.createClient(config));
