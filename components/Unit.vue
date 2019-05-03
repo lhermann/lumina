@@ -1,9 +1,10 @@
 <template>
-  <section class="max-w-4xl">
+  <section>
     <p class="font-semibold text-brand-400">UNIT #{{ number }}</p>
     <h2 class="mb-4">{{ title }}</h2>
-    <p class="text-lg font-light text-gray-500">{{ description }}</p>
+    <p class="text-lg font-light text-gray-600 mb-6">{{ description }}</p>
     <section-component
+      class="mb-6"
       v-for="item in sections"
       :key="item.fields.number"
       :section="item"

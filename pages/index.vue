@@ -42,7 +42,7 @@
         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
           <g
             transform="translate(-2.000000, 44.000000)"
-            fill="#f7fafc"
+            fill="#edf2f7"
             fill-rule="nonzero"
           >
             <path
@@ -61,7 +61,7 @@
           </g>
           <g
             transform="translate(-4.000000, 76.000000)"
-            fill="#f7fafc"
+            fill="#edf2f7"
             fill-rule="nonzero"
           >
             <path
@@ -73,15 +73,15 @@
     </div>
 
     <!-- Units -->
-    <section class="bg-gray-100 py-16">
-      <div class="container px-8 md:px-16">
+    <section class="bg-gray-200 py-16">
+      <div class="px-8 md:px-16">
         <header class="mb-8">
           <h1 class="my-2 text-center text-gray-800">
             Lessons
           </h1>
           <div class="h-1 mx-auto gradient w-64 opacity-25 rounded-t"></div>
         </header>
-        <div class="flex flex-col items-center">
+        <div class="max-w-4xl mx-auto">
           <unit v-for="item in units" :key="item.fields.number" :unit="item" />
         </div>
       </div>
