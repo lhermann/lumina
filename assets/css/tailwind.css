@@ -60,3 +60,24 @@
  * @import "utilities/background-patterns";
  * @import "utilities/skew-transforms";
  */
+
+/*
+ * Vue Transitions
+ */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.drop-enter-active,
+.drop-leave-active {
+  transition: transform 0.3s;
+}
+.drop-enter,
+.drop-leave-to {
+  transform: translateY(-1rem);
+}
