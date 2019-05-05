@@ -4,13 +4,10 @@
       <h1 class="text-4xl font-bold leading-tight text-white">{{ title }}</h1>
       <div class="h-1 mx-auto bg-white w-64 opacity-25 rounded-t"></div>
     </header>
-    <div class="max-w-4xl mx-auto mt-12 bg-black">
+    <div class="video max-w-4xl mx-auto mt-12 bg-black relative x-10 shadow-md">
       <iframe
         v-if="videoId"
-        class="shadow-md"
-        width="100%"
-        height="500px"
-        :src="youTubeUrl"
+        :src="youTubeUrl + '?rel=0&modestbranding=1&rel=0&cc_load_policy=1'"
         frameborder="0"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
@@ -56,10 +53,27 @@ export default {
     youTubeUrl() {
       return `https://www.youtube-nocookie.com/embed/${this.videoId}`;
     }
+  },
+  mounted() {
+    this.$store.dispatch("progress/addId", this.id);
   }
 };
 </script>
 
 <style scoped>
-/* Styles */
+.video::before {
+  content: "";
+  display: block;
+  width: 100%;
+  padding-bottom: 56.25%;
+}
+
+.video > iframe {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
 </style>
