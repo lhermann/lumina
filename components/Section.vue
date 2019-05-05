@@ -27,20 +27,32 @@
           :lesson="lesson"
           :index="i"
           :of="lessons.length"
-          :done="false"
+          :previous-done="lessonVisited(i - 1)"
+          :next-done="lessonVisited(i + 1)"
         />
       </li>
     </ul>
-    <div v-else class="ml-4">
-      <div class="w-10">
-        <div
-          class="mx-auto relative z-10 border-l-4 h-4 border-gray-400"
-          style="width: 0;"
-        ></div>
+    <div v-else>
+      <div class="w-10 ml-4">
+        <div class="w-3 mx-auto bg-white h-4 shadow-md">
+          <div
+            class="mx-auto relative z-10 border-l-4 h-4"
+            :class="{
+              'border-gray-400': !isDone,
+              'border-green-500': isDone
+            }"
+            style="width: 0;"
+          ></div>
+        </div>
       </div>
-      <div class="font-semibold text-gray-400 py-1">
+      <button
+        class="inline-flex items-center bg-white rounded shadow-md px-4 py-2 font-semibold hover:bg-gray-100"
+        :class="{ 'text-gray-400': !isDone, 'text-green-500': isDone }"
+        @click="onClick"
+      >
+        <icon-locked class="mr-2" v-if="isLocked" />
         <span>{{ lessonCount }} Lessons</span>
-      </div>
+      </button>
     </div>
 
     <!-- Passphrase Modal -->
@@ -111,7 +123,7 @@ export default {
       return false;
     },
     isDone() {
-      return false;
+      return this.lessons.every((a, i) => this.lessonVisited(i));
     },
     id() {
       return get(this.section, "sys.id");
@@ -169,6 +181,11 @@ export default {
         number: "d" + i,
         dummy: true
       }));
+    },
+    lessonVisited(index) {
+      if (index < 0 || index >= this.lessonCount) return false;
+      const id = get(this.lessons[index], "sys.id", "");
+      return this.$store.getters["progress/visited"](id);
     }
   },
   watch: {

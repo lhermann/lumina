@@ -31,6 +31,7 @@ export const actions = {
   initImmortalDB({ dispatch }) {
     // console.log("initImmortalDB");
     dispatch("auth/recover");
+    dispatch("progress/recover");
   }
 };
 

@@ -13,7 +13,7 @@
         </h1>
       </nuxt-link>
 
-      <div class="block lg:hidden pr-4">
+      <!-- <div class="block lg:hidden pr-4">
         <button
           id="nav-toggle"
           class="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-gray-800 hover:border-teal-500 appearance-none focus:outline-none"
@@ -27,7 +27,7 @@
             <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
           </svg>
         </button>
-      </div>
+      </div> -->
 
       <div
         class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 bg-white lg:bg-transparent text-black p-4 lg:p-0 z-20"
