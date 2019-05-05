@@ -232,15 +232,16 @@ import { mapGetters } from "vuex";
 export default {
   components: { Divider, Unit },
   async asyncData({ app }) {
-    const landing = await app.$contentful.getEntries({
+    let landing = app.$contentful.getEntries({
       locale: "ms-MY",
       content_type: "page",
       "fields.key[match]": "landing"
     });
-    const units = await app.$contentful.getEntries({
+    let units = app.$contentful.getEntries({
       locale: "ms-MY",
       content_type: "unit"
     });
+    [landing, units] = await Promise.all([landing, units]);
     return {
       content: first(landing.items).fields.content.content,
       units: units.items

@@ -200,6 +200,7 @@ export default {
     // Load lessons
     if (this.id) {
       const response = await this.$contentful.getEntry(this.id);
+      console.log({ response });
       this.lessons = get(response, "fields.lessons", []);
       this.pending = false;
     }

@@ -16,10 +16,14 @@
     <divider class="-mt-64" />
     <div class="bg-gray-200 pt-32 pb-16 px-8 md:px-16">
       <div class="max-w-4xl mx-auto">
-        {{ description }}
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat
-        molestias cum perspiciatis, a nobis ipsum qui. Eius assumenda minus
-        sapiente!
+        <div>
+          {{ description }}
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat
+          molestias cum perspiciatis, a nobis ipsum qui. Eius assumenda minus
+          sapiente!
+        </div>
+        <hr />
+        <section-component class="mt-6" :section="section" />
       </div>
     </div>
   </section>
@@ -27,12 +31,19 @@
 
 <script>
 import Divider from "~/components/layout/Divider";
+import SectionComponent from "~/components/Section";
 import get from "lodash/get";
 
 export default {
-  components: { Divider },
+  components: { Divider, SectionComponent },
   async asyncData({ app, params }) {
-    return await app.$contentful.getEntry(params.id);
+    let lesson = app.$contentful.getEntry(params.id);
+    let section = app.$contentful.getEntries({ links_to_entry: params.id });
+    [lesson, section] = await Promise.all([lesson, section]);
+    return {
+      ...lesson,
+      section: section.items.length ? section.items[0] : null
+    };
   },
   computed: {
     id() {
