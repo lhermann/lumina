@@ -22,9 +22,9 @@
       </button>
     </header>
     <ul v-if="!isLocked && isExpanded">
-      <li v-for="(lesson, i) in lessons" :key="lesson.number">
+      <li v-for="(item, i) in lessons" :key="item.number">
         <lesson
-          :lesson="lesson"
+          :lesson="item"
           :index="i"
           :of="lessons.length"
           :previous-done="lessonVisited(i - 1)"
@@ -36,7 +36,7 @@
       <div class="w-10 ml-4">
         <div class="w-3 mx-auto bg-white h-4 shadow-md">
           <div
-            class="mx-auto relative z-10 border-l-4 h-4"
+            class="mx-auto relative z-10 border-l-2 h-4"
             :class="{
               'border-gray-400': !isDone,
               'border-green-500': isDone
@@ -200,7 +200,6 @@ export default {
     // Load lessons
     if (this.id) {
       const response = await this.$contentful.getEntry(this.id);
-      console.log({ response });
       this.lessons = get(response, "fields.lessons", []);
       this.pending = false;
     }

@@ -92,7 +92,7 @@ export default {
   },
   methods: {
     onClick() {
-      this.$router.push(`/lesson/${this.id}`);
+      this.$router.push(`/lessons/${this.id}`);
     }
   }
 };
@@ -101,13 +101,13 @@ export default {
 <style scoped>
 .connect {
   @apply mx-auto relative z-10;
-  @apply border-l-4;
+  @apply border-l-2;
   width: 0;
 }
 
 .circle {
   @apply w-10 h-10 text-center relative z-20;
   @apply flex items-center justify-center -my-px;
-  @apply rounded-full border-4;
+  @apply rounded-full border-2;
 }
 </style>

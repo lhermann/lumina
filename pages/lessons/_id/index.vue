@@ -14,16 +14,32 @@
       ></iframe>
     </div>
     <divider class="-mt-64" />
-    <div class="bg-gray-200 pt-32 pb-16 px-8 md:px-16">
+    <div class="bg-gray-200 pt-40"></div>
+    <div class="bg-gray-200 pb-32 px-8 md:px-16">
       <div class="max-w-4xl mx-auto">
-        <div>
-          {{ description }}
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat
-          molestias cum perspiciatis, a nobis ipsum qui. Eius assumenda minus
-          sapiente!
+        <div class="mb-16">
+          <attachment
+            v-for="item in attachments"
+            :key="item.sys.id"
+            :attachment="item"
+          />
         </div>
-        <hr />
-        <section-component class="mt-6" :section="section" />
+        <div class="text-xl font-light text-gray-700 mb-16">
+          {{ description }}
+        </div>
+      </div>
+
+      <hr class="border-b-1 bg-gray-400 mb-16 h-px" />
+
+      <div class="max-w-4xl mx-auto">
+        <section-component class="mb-16" :section="section" />
+        <div class="flex flex-between">
+          <nuxt-link
+            class="bg-white text-gray-700 rounded border-b-2 py-2 px-6 border-brand-500 hover:bg-gray-100 shadow-md"
+            to="/"
+            ><icon-back
+          /></nuxt-link>
+        </div>
       </div>
     </div>
   </section>
@@ -32,10 +48,12 @@
 <script>
 import Divider from "~/components/layout/Divider";
 import SectionComponent from "~/components/Section";
+import Attachment from "~/components/Attachment";
+import IconBack from "~/components/icons/Back";
 import get from "lodash/get";
 
 export default {
-  components: { Divider, SectionComponent },
+  components: { Divider, SectionComponent, Attachment, IconBack },
   async asyncData({ app, params }) {
     let lesson = app.$contentful.getEntry(params.id);
     let section = app.$contentful.getEntries({ links_to_entry: params.id });
@@ -63,6 +81,9 @@ export default {
     },
     youTubeUrl() {
       return `https://www.youtube-nocookie.com/embed/${this.videoId}`;
+    },
+    attachments() {
+      return get(this.fields, "attachments", []);
     }
   },
   mounted() {
