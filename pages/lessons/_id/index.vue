@@ -23,12 +23,27 @@
     </div>
     <div class="bg-gray-200 pt-16 pb-32 px-8 md:px-16">
       <div class="max-w-4xl mx-auto">
-        <div v-if="attachments.length" class="mb-16">
+        <div v-if="attachments.length" class="mb-10">
           <attachment
             v-for="item in attachments"
             :key="item.sys.id"
             :attachment="item"
           />
+          <div
+            v-if="isProtected"
+            class="flex items-center text-sm text-gray-600 mt-2"
+          >
+            <icon-locked :size="16" class="mr-3" />
+            <span class="mr-3">Passphrase for attachments:</span>
+            <input
+              :value="storedPassphrase"
+              class="border rounded py-1 px-2 text-gray-700 my-2"
+              size="32"
+              readonly
+              ref="passphrase"
+              @click="$refs.passphrase.select()"
+            />
+          </div>
         </div>
         <div v-if="description" class="text-xl font-light text-gray-700 mb-16">
           {{ description }}
@@ -56,12 +71,13 @@ import Divider from "~/components/layout/Divider";
 import SectionComponent from "~/components/Section";
 import Attachment from "~/components/Attachment";
 import IconBack from "~/components/icons/Back";
+import IconLocked from "~/components/icons/Locked";
 import get from "lodash/get";
 import aes from "crypto-js/aes";
 import utf8 from "crypto-js/enc-utf8";
 
 export default {
-  components: { Divider, SectionComponent, Attachment, IconBack },
+  components: { Divider, SectionComponent, Attachment, IconBack, IconLocked },
   async asyncData({ app, params }) {
     let lesson = app.$contentful.getEntry(params.id);
     let section = app.$contentful.getEntries({ links_to_entry: params.id });
@@ -81,15 +97,15 @@ export default {
     storedPassphrase() {
       return this.$store.getters["auth/passphrase"](this.id);
     },
-    protected() {
-      return get(this.fields, "protected", false);
+    isProtected() {
+      return get(this.fields, "isProtected", false);
     },
     description() {
       return get(this.fields, "description", "");
     },
     videoId() {
       let videoId = get(this.fields, "youTubeVideoId", "");
-      if (this.protected) {
+      if (this.isProtected) {
         videoId = this.storedPassphrase
           ? aes.decrypt(videoId, this.storedPassphrase).toString(utf8)
           : null;

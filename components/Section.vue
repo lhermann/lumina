@@ -70,7 +70,7 @@
       <input
         v-model="passphrase"
         id="password"
-        class="block mx-auto border border-blue-300 rounded py-2 px-3 text-grey-700 shadow-inner my-2"
+        class="block mx-auto border border-blue-300 rounded py-2 px-3 text-gray-700 shadow-inner my-2"
         type="password"
         size="40"
       />
