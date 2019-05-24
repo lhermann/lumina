@@ -61,10 +61,14 @@
  * @import "utilities/skew-transforms";
  */
 
+button:disabled,
+[disabled] {
+  cursor: default;
+}
+
 /*
  * Default content
  */
-
 .content {
   @apply text-gray-800;
 }

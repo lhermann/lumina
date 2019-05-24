@@ -1,7 +1,10 @@
 <template>
   <div>
     <div class="w-10 ml-4">
-      <div class="w-3 mx-auto bg-white h-4 shadow-md">
+      <div
+        class="w-3 mx-auto bg-white h-4 shadow-md"
+        :class="{ 'opacity-50': placeholder }"
+      >
         <div
           class="connect h-4"
           :class="{
@@ -13,7 +16,8 @@
     </div>
     <button
       class="w-full flex items-center bg-white rounded shadow-md px-4"
-      :class="{ 'opacity-50': isDummy, 'hover:bg-gray-100': !isDummy }"
+      :class="{ 'opacity-50': placeholder, 'hover:bg-gray-100': !placeholder }"
+      :disabled="placeholder"
       @click="onClick"
     >
       <div class="w-10 mr-4">
@@ -47,7 +51,8 @@
         <span class="font-semibold text-gray-400 mr-2">#{{ number }}</span>
         {{ title }}
       </div>
-      <icon-arrow-right v-show="!isDummy" />
+      <icon-wait v-if="placeholder" />
+      <icon-arrow-right v-else />
     </button>
   </div>
 </template>
@@ -56,10 +61,11 @@
 import IconPlay from "~/components/icons/Play";
 import IconDone from "~/components/icons/Done";
 import IconArrowRight from "~/components/icons/ArrowRight";
+import IconWait from "~/components/icons/Wait";
 import get from "lodash/get";
 
 export default {
-  components: { IconPlay, IconDone, IconArrowRight },
+  components: { IconPlay, IconDone, IconArrowRight, IconWait },
   props: {
     lesson: { type: Object, default: null },
     index: { type: Number, default: 0 },
@@ -68,8 +74,8 @@ export default {
     nextDone: { type: Boolean, default: false }
   },
   computed: {
-    isDummy() {
-      return Boolean(this.lesson.dummy);
+    placeholder() {
+      return get(this.lesson, "fields.placeholder", false);
     },
     isVisited() {
       return this.$store.getters["progress/visited"](this.id);
