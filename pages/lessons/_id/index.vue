@@ -10,6 +10,7 @@
       >
         <iframe
           v-if="videoId"
+          class="z-30"
           :src="
             `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1&rel=0&cc_load_policy=1`
           "
@@ -17,7 +18,7 @@
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen
         ></iframe>
-        <div class="flex items-center justify-center">
+        <div class="flex items-center justify-center z-20">
           <div class="text-gray-700 text-xl2 font-bold text-center">
             <icon-close :size="60" class="mx-auto" />
             <p>Missing Video</p>
