@@ -1,4 +1,5 @@
 import get from "lodash/get";
+import Vue from "vue";
 
 /*
  * initial state
@@ -49,5 +50,5 @@ export const actions = {
 export const mutations = {
   setPassphrases: (state, passphrases) => (state.passphrases = passphrases),
   addPassphrase: (state, payload) =>
-    (state.passphrases[payload.id] = payload.passphrase)
+    Vue.set(state.passphrases, payload.id, payload.passphrase)
 };

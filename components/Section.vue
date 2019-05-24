@@ -113,7 +113,6 @@ export default {
       lessons: this.createDummyLessons(this.lessonCount),
       modalActive: false,
       passphrase: "",
-      locked: true,
       wrongPassphrase: false
     };
   },
@@ -142,6 +141,11 @@ export default {
     },
     storedPassphrase() {
       return this.$store.getters["auth/passphrase"](this.id);
+    },
+    locked() {
+      return (
+        this.hash && sha256(this.storedPassphrase).toString() !== this.hash
+      );
     }
   },
   methods: {
@@ -191,9 +195,6 @@ export default {
   watch: {
     modalActive(newState) {
       if (!newState) this.wrongPassphrase = false;
-    },
-    storedPassphrase(phrase) {
-      if (sha256(phrase).toString() === this.hash) this.locked = false;
     }
   },
   async mounted() {
