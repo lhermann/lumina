@@ -1,5 +1,6 @@
-import get from "lodash/get";
 import Vue from "vue";
+import get from "lodash/get";
+import isEmpty from "lodash/isEmpty";
 
 /*
  * initial state
@@ -35,7 +36,7 @@ export const actions = {
   async recover({ commit }) {
     if (process.browser) {
       const raw = await this.$persist.get("passphrases", {});
-      if (raw !== "undefined") {
+      if (raw && !isEmpty(raw) && raw !== "undefined") {
         const passphrases = JSON.parse(raw);
         commit("setPassphrases", passphrases);
       }

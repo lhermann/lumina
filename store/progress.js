@@ -1,4 +1,5 @@
 // import get from "lodash/get";
+import isEmpty from "lodash/isEmpty";
 
 /*
  * initial state
@@ -34,7 +35,7 @@ export const actions = {
   async recover({ commit }) {
     if (process.browser) {
       const raw = await this.$persist.get("visited", {});
-      if (raw !== "undefined") {
+      if (raw && !isEmpty(raw) && raw !== "undefined") {
         const visited = JSON.parse(raw);
         commit("setVisited", visited);
       }
