@@ -4,20 +4,25 @@
       <h1 class="text-4xl font-bold leading-tight text-white">{{ title }}</h1>
       <div class="h-1 mx-auto bg-white w-64 opacity-25 rounded-t"></div>
     </header>
-    <div class="video max-w-4xl mx-auto mt-12 bg-black relative x-10 shadow-md">
-      <iframe
-        v-if="videoId"
-        :src="youTubeUrl + '?rel=0&modestbranding=1&rel=0&cc_load_policy=1'"
-        frameborder="0"
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-      ></iframe>
+    <div class="relative">
+      <div
+        class="video max-w-4xl mx-auto mt-12 bg-black relative x-10 shadow-md"
+      >
+        <iframe
+          v-if="videoId"
+          class="z-20"
+          :src="youTubeUrl + '?rel=0&modestbranding=1&rel=0&cc_load_policy=1'"
+          frameborder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+
+      <divider class="absolute bottom-0 w-full z-10" />
     </div>
-    <divider class="-mt-64" />
-    <div class="bg-gray-200 pt-40"></div>
-    <div class="bg-gray-200 pb-32 px-8 md:px-16">
+    <div class="bg-gray-200 pt-16 pb-32 px-8 md:px-16">
       <div class="max-w-4xl mx-auto">
-        <div class="mb-16">
+        <div v-if="attachments.length" class="mb-16">
           <attachment
             v-for="item in attachments"
             :key="item.sys.id"
