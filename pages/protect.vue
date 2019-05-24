@@ -160,6 +160,6 @@ export default {
 
 <style scoped>
 input {
-  @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight;
+  @apply bg-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight;
 }
 </style>

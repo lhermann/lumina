@@ -18,7 +18,10 @@
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen
         ></iframe>
-        <div class="flex items-center justify-center z-20">
+        <div
+          v-else-if="videoIdMissing"
+          class="flex items-center justify-center z-20"
+        >
           <div class="text-gray-700 text-xl2 font-bold text-center">
             <icon-close :size="60" class="mx-auto" />
             <p>Missing Video</p>
@@ -113,10 +116,13 @@ export default {
       return this.$store.getters["auth/passphrase"](this.id);
     },
     isProtected() {
-      return get(this.fields, "isProtected", false);
+      return get(this.fields, "protected", false);
     },
     description() {
       return get(this.fields, "description", "");
+    },
+    videoIdMissing() {
+      return !get(this.fields, "youTubeVideoId");
     },
     videoId() {
       let videoId = get(this.fields, "youTubeVideoId", "");

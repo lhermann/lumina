@@ -1,6 +1,6 @@
 <script>
 export default {
-  fetch({ route, redirect }) {
+  fetch({ redirect }) {
     redirect(302, "/");
   }
 };

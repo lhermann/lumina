@@ -61,6 +61,10 @@
  * @import "utilities/skew-transforms";
  */
 
+[v-cloak] {
+  display: none;
+}
+
 /*
  * Vue Transitions
  */

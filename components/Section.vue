@@ -6,7 +6,7 @@
         @click="onClick"
       >
         <div class="flex justify-center w-10 mr-4">
-          <icon-locked class="text-gray-500" v-if="isLocked" />
+          <icon-locked class="text-gray-500" v-if="locked" />
           <icon-done-all class="text-green-600" v-else-if="isDone" />
           <icon-class class="text-blue-500" v-else />
         </div>
@@ -15,14 +15,14 @@
           {{ title }}
         </h3>
         <div class="bg-gray-200 text-gray-600 py-1 px-2 rounded">
-          <span v-if="isLocked">Unlock</span>
+          <span v-if="locked">Unlock</span>
           <icon-collapse v-else-if="isExpanded" />
           <icon-expand v-else />
         </div>
       </button>
     </header>
     <!-- Lessons -->
-    <ul v-if="!isLocked && isExpanded">
+    <ul v-if="!locked && isExpanded">
       <li v-for="(item, i) in lessons" :key="item.number">
         <lesson
           :lesson="item"
@@ -52,7 +52,7 @@
         :class="{ 'text-gray-400': !isDone, 'text-green-500': isDone }"
         @click="onClick"
       >
-        <icon-locked class="mr-2" v-if="isLocked" />
+        <icon-locked class="mr-2" v-if="locked" />
         <span>{{ lessonCount }} Lessons</span>
       </button>
     </div>
@@ -119,10 +119,6 @@ export default {
     };
   },
   computed: {
-    isLocked() {
-      if (this.hash) return this.locked;
-      return false;
-    },
     isDone() {
       return (
         this.lessons.length &&
@@ -155,7 +151,7 @@ export default {
   },
   methods: {
     onClick() {
-      if (this.isLocked) {
+      if (this.locked) {
         this.modalActive = true;
       } else {
         this.isExpanded = !this.isExpanded;
@@ -163,10 +159,9 @@ export default {
     },
     onUnlock() {
       if (sha256(this.passphrase).toString() === this.hash) {
-        this.locked = false;
+        this.persistPassphrase();
         this.modalActive = false;
         this.isExpanded = true;
-        this.persistPassphrase();
       } else {
         this.wrongPassphrase = true;
       }
