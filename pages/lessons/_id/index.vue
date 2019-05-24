@@ -10,7 +10,9 @@
       >
         <iframe
           v-if="videoId"
-          :src="youTubeUrl + '?rel=0&modestbranding=1&rel=0&cc_load_policy=1'"
+          :src="
+            `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1&rel=0&cc_load_policy=1`
+          "
           frameborder="0"
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen
@@ -55,6 +57,8 @@ import SectionComponent from "~/components/Section";
 import Attachment from "~/components/Attachment";
 import IconBack from "~/components/icons/Back";
 import get from "lodash/get";
+import aes from "crypto-js/aes";
+import utf8 from "crypto-js/enc-utf8";
 
 export default {
   components: { Divider, SectionComponent, Attachment, IconBack },
@@ -71,20 +75,26 @@ export default {
     id() {
       return get(this, "sys.id", "");
     },
+    title() {
+      return get(this.fields, "title", "");
+    },
     storedPassphrase() {
       return this.$store.getters["auth/passphrase"](this.id);
     },
-    title() {
-      return get(this.fields, "title", "");
+    protected() {
+      return get(this.fields, "protected", false);
     },
     description() {
       return get(this.fields, "description", "");
     },
     videoId() {
-      return get(this.fields, "youTubeVideoId", "");
-    },
-    youTubeUrl() {
-      return `https://www.youtube-nocookie.com/embed/${this.videoId}`;
+      let videoId = get(this.fields, "youTubeVideoId", "");
+      if (this.protected) {
+        videoId = this.storedPassphrase
+          ? aes.decrypt(videoId, this.storedPassphrase).toString(utf8)
+          : null;
+      }
+      return videoId;
     },
     attachments() {
       return get(this.fields, "attachments", []);

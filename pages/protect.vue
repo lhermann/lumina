@@ -4,14 +4,28 @@
     <div class="mb-4">
       <label
         class="block text-grey-darker text-sm font-bold mb-2"
-        for="plaintext"
+        for="plaintext-input"
       >
         Plaintext
       </label>
       <input
-        v-model="plaintext"
+        v-model="plaintextInput"
         class="focus:outline-none focus:shadow-outline"
-        id="plaintext"
+        id="plaintext-input"
+        type="text"
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-grey-darker text-sm font-bold mb-2"
+        for="cypher-input"
+      >
+        Cypher
+      </label>
+      <input
+        v-model="cypherInput"
+        class="focus:outline-none focus:shadow-outline"
+        id="cypher-input"
         type="text"
       />
     </div>
@@ -31,10 +45,16 @@
     </div>
     <div class="mb-4">
       <button
-        @click="onGenerate"
-        class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+        @click="onEncrypt"
+        class="bg-green-600 hover:bg-green-700 border border-green-600 text-white font-bold py-2 px-4 rounded"
       >
         Generate Cipher
+      </button>
+      <button
+        @click="onDecrypt"
+        class="bg-transparent hover:bg-green-600 border border-green-600 text-green-600 hover:text-white font-bold py-2 px-4 rounded"
+      >
+        Decrypt Cipher
       </button>
     </div>
     <div class="mb-4">
@@ -45,7 +65,21 @@
         </span>
       </label>
       <input
-        v-model="cipher"
+        v-model="cipherOutput"
+        class="focus:outline-none focus:shadow-outline"
+        type="text"
+        readonly
+      />
+    </div>
+    <div class="mb-4">
+      <label class="block text-grey-darker text-sm font-bold mb-2">
+        Plaintext
+        <span class="text-gray-500 font-normal">
+          Just for testing – Algorithm: AES
+        </span>
+      </label>
+      <input
+        v-model="plaintextOutput"
         class="focus:outline-none focus:shadow-outline"
         type="text"
         readonly
@@ -59,7 +93,7 @@
         </span>
       </label>
       <input
-        v-model="hash"
+        v-model="hashOutput"
         class="focus:outline-none focus:shadow-outline"
         type="text"
         readonly
@@ -71,20 +105,32 @@
 <script>
 import sha256 from "crypto-js/sha256";
 import aes from "crypto-js/aes";
+import utf8 from "crypto-js/enc-utf8";
 
 export default {
   data() {
     return {
-      plaintext: "I am a secret",
-      cipher: "",
+      // Input
+      plaintextInput: "I am a secret",
+      cypherInput: "",
       passphrase: "durian-dove-heart-3",
-      hash: ""
+      // Output
+      plaintextOutput: "",
+      cipherOutput: "",
+      hashOutput: ""
     };
   },
   methods: {
-    onGenerate() {
-      this.cipher = aes.encrypt(this.plaintext, this.passphrase).toString();
-      this.hash = sha256(this.passphrase);
+    onEncrypt() {
+      this.cipherOutput = aes
+        .encrypt(this.plaintextInput, this.passphrase)
+        .toString();
+      this.hashOutput = sha256(this.passphrase);
+    },
+    onDecrypt() {
+      this.plaintextOutput = aes
+        .decrypt(this.cypherInput, this.passphrase)
+        .toString(utf8);
     }
   }
 };
