@@ -38,8 +38,8 @@
           class="connect h-2"
           :class="{
             'border-transparent': index + 1 >= of,
-            'border-gray-400': index + 1 < of && !nextDone,
-            'border-green-500': index + 1 < of && nextDone
+            'border-gray-400': index + 1 < of && !(nextDone && isVisited),
+            'border-green-500': index + 1 < of && nextDone && isVisited
           }"
         ></div>
       </div>

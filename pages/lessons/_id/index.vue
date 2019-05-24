@@ -6,11 +6,10 @@
     </header>
     <div class="relative">
       <div
-        class="video max-w-4xl mx-auto mt-12 bg-black relative x-10 shadow-md"
+        class="video max-w-4xl mx-auto mt-12 bg-black relative z-20 shadow-md"
       >
         <iframe
           v-if="videoId"
-          class="z-20"
           :src="youTubeUrl + '?rel=0&modestbranding=1&rel=0&cc_load_policy=1'"
           frameborder="0"
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
@@ -29,7 +28,7 @@
             :attachment="item"
           />
         </div>
-        <div class="text-xl font-light text-gray-700 mb-16">
+        <div v-if="description" class="text-xl font-light text-gray-700 mb-16">
           {{ description }}
         </div>
       </div>
