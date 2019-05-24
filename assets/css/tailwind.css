@@ -61,8 +61,62 @@
  * @import "utilities/skew-transforms";
  */
 
-[v-cloak] {
-  display: none;
+/*
+ * Default content
+ */
+
+.content {
+  @apply text-gray-800;
+}
+
+.content > * {
+  @apply mb-4;
+}
+
+.content h1 {
+  @apply text-3xl font-semibold mb-10 mt-16;
+  @apply border-b-4 border-brand-300;
+}
+
+.content h2 {
+  @apply text-2xl font-semibold mb-8 mt-12;
+  @apply border-b-2 border-brand-300;
+}
+
+.content h3 {
+  @apply text-xl font-semibold mb-6 mt-10;
+}
+
+.content h4 {
+  @apply text-lg font-semibold mb-4 mt-8;
+}
+
+.content ul {
+  @apply ml-8 list-disc;
+}
+
+.content ol {
+  @apply ml-8 list-decimal;
+}
+
+.content li p {
+  @apply mb-2;
+}
+
+.content a {
+  @apply underline text-blue-600;
+}
+
+.content a:hover {
+  @apply text-green-700;
+}
+
+.content code {
+  @apply inline-block bg-gray-300 text-gray-600 text-sm leading-normal rounded px-1;
+}
+
+.content blockquote {
+  @apply border-l-2 border-gray-400 italic text-gray-600 pl-4;
 }
 
 /*

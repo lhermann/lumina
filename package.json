@@ -12,6 +12,7 @@
     "test": "ava"
   },
   "dependencies": {
+    "@contentful/rich-text-html-renderer": "^13.1.0",
     "@nuxtjs/axios": "^5.5.1",
     "contentful": "^7.6.0",
     "cross-env": "^5.2.0",

@@ -102,7 +102,7 @@ export default {
     let landing = app.$contentful.getEntries({
       locale: "ms-MY",
       content_type: "page",
-      "fields.key[match]": "landing"
+      "fields.key[match]": "home"
     });
     let units = app.$contentful.getEntries({
       locale: "ms-MY",

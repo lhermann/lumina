@@ -5,7 +5,8 @@ import get from "lodash/get";
  ************************************/
 
 export const state = () => ({
-  website: {}
+  website: {},
+  pages: []
 });
 
 /*
@@ -13,7 +14,8 @@ export const state = () => ({
  ************************************/
 
 export const getters = {
-  title: state => get(state, "website.title", "")
+  title: state => get(state, "website.title", ""),
+  pages: state => state.pages
 };
 
 /*
@@ -22,11 +24,17 @@ export const getters = {
 
 export const actions = {
   async nuxtServerInit({ commit }, { app }) {
-    const response = await app.$contentful.getEntries({
+    let website = app.$contentful.getEntries({
       locale: "ms-MY",
       content_type: "website"
     });
-    commit("setWebsite", get(response.items[0], "fields", {}));
+    let pages = app.$contentful.getEntries({
+      locale: "ms-MY",
+      content_type: "page"
+    });
+    [website, pages] = await Promise.all([website, pages]);
+    commit("setWebsite", get(website.items[0], "fields", {}));
+    commit("setPages", pages.items);
   },
   initImmortalDB({ dispatch }) {
     // console.log("initImmortalDB");
@@ -40,5 +48,6 @@ export const actions = {
  ************************************/
 
 export const mutations = {
-  setWebsite: (state, website) => (state.website = website)
+  setWebsite: (state, website) => (state.website = website),
+  setPages: (state, pages) => (state.pages = pages)
 };
