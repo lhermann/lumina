@@ -17,6 +17,12 @@
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen
         ></iframe>
+        <div class="flex items-center justify-center">
+          <div class="text-gray-700 text-xl2 font-bold text-center">
+            <icon-close :size="60" class="mx-auto" />
+            <p>Missing Video</p>
+          </div>
+        </div>
       </div>
 
       <divider class="absolute bottom-0 w-full z-10" />
@@ -72,12 +78,20 @@ import SectionComponent from "~/components/Section";
 import Attachment from "~/components/Attachment";
 import IconBack from "~/components/icons/Back";
 import IconLocked from "~/components/icons/Locked";
+import IconClose from "~/components/icons/Close";
 import get from "lodash/get";
 import aes from "crypto-js/aes";
 import utf8 from "crypto-js/enc-utf8";
 
 export default {
-  components: { Divider, SectionComponent, Attachment, IconBack, IconLocked },
+  components: {
+    Divider,
+    SectionComponent,
+    Attachment,
+    IconBack,
+    IconLocked,
+    IconClose
+  },
   async asyncData({ app, params }) {
     let lesson = app.$contentful.getEntry(params.id);
     let section = app.$contentful.getEntries({ links_to_entry: params.id });
@@ -130,7 +144,8 @@ export default {
   padding-bottom: 56.25%;
 }
 
-.video > iframe {
+.video > iframe,
+.video > div {
   position: absolute;
   top: 0;
   bottom: 0;
