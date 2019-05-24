@@ -46,7 +46,12 @@
           <div class="h-1 mx-auto gradient w-64 opacity-25 rounded-t"></div>
         </header>
         <div class="max-w-4xl mx-auto">
-          <unit v-for="item in units" :key="item.fields.number" :unit="item" />
+          <unit
+            v-for="item in units"
+            :key="item.fields.number"
+            class="mb-16"
+            :unit="item"
+          />
         </div>
       </div>
     </section>
@@ -244,7 +249,7 @@ export default {
     [landing, units] = await Promise.all([landing, units]);
     return {
       content: first(landing.items).fields.content.content,
-      units: units.items
+      units: units.items.sort((a, b) => a.fields.number - b.fields.number)
     };
   },
   head() {

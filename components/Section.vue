@@ -21,6 +21,7 @@
         </div>
       </button>
     </header>
+    <!-- Lessons -->
     <ul v-if="!isLocked && isExpanded">
       <li v-for="(item, i) in lessons" :key="item.number">
         <lesson
@@ -32,6 +33,7 @@
         />
       </li>
     </ul>
+    <!-- Lesson Indicator -->
     <div v-else>
       <div class="w-10 ml-4">
         <div class="w-3 mx-auto bg-white h-4 shadow-md">
@@ -122,7 +124,10 @@ export default {
       return false;
     },
     isDone() {
-      return this.lessons.every((a, i) => this.lessonVisited(i));
+      return (
+        this.lessons.length &&
+        this.lessons.every((a, i) => this.lessonVisited(i))
+      );
     },
     id() {
       return get(this.section, "sys.id");
