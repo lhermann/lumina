@@ -84,3 +84,4 @@ dist
 sw.*
 
 env.sh
+exports
