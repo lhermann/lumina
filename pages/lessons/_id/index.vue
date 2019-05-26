@@ -23,13 +23,17 @@
           class="flex items-center justify-center z-20"
         >
           <div class="text-gray-700 text-xl2 font-bold text-center">
-            <icon-close :size="60" class="mx-auto" />
+            <div class="mx-auto">
+              <icon-close :size="60" />
+            </div>
             <p>Missing Video</p>
           </div>
         </div>
       </div>
 
-      <divider class="absolute bottom-0 w-full z-10" />
+      <div class="absolute bottom-0 w-full z-10">
+        <divider />
+      </div>
     </div>
     <div class="bg-gray-200 pt-16 pb-32 px-8 md:px-16">
       <div class="max-w-4xl mx-auto">
@@ -43,7 +47,7 @@
             v-if="isProtected"
             class="flex items-center text-sm text-gray-600 mt-2"
           >
-            <icon-locked :size="16" class="mr-3" />
+            <span class="mr-3"><icon-locked :size="16"/></span>
             <span class="mr-3">Passphrase for attachments:</span>
             <input
               :value="storedPassphrase"
@@ -68,8 +72,9 @@
           <nuxt-link
             class="bg-white text-gray-700 rounded border-b-2 py-2 px-6 border-brand-500 hover:bg-gray-100 shadow-md"
             to="/"
-            ><icon-back
-          /></nuxt-link>
+          >
+            <icon-back />
+          </nuxt-link>
         </div>
       </div>
     </div>

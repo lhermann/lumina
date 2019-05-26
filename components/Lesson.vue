@@ -35,8 +35,8 @@
             'border-green-500': isVisited
           }"
         >
-          <icon-done v-if="isVisited" class="text-green-500" />
-          <icon-play v-else class="text-blue-500" />
+          <span v-if="isVisited" class="text-green-500"><icon-done /></span>
+          <span v-else class="text-blue-500"><icon-play /></span>
         </div>
         <div
           class="connect h-2"

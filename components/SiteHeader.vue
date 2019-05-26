@@ -7,7 +7,7 @@
         class="flex items-center no-underline hover:no-underline"
         to="/"
       >
-        <Logo class="h-8" />
+        <Logo />
         <h1 class="pl-4 font-semibold text-2xl lg:text-4xl">
           {{ pageTitle | uppercase }}
         </h1>

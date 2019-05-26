@@ -1,7 +1,7 @@
 <template>
   <div class="attachment border-brand-500 bg-white hover:bg-gray-100">
     <a :href="url" class="flex items-center py-2 px-6">
-      <icon-attachment class="mr-4" />
+      <span class="mr-4"><icon-attachment /></span>
       <div class="flex-1 truncate">
         {{ title }}
         <span v-if="filename" class="text-gray-500 font-semibold text-xs ml-2">

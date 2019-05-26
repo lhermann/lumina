@@ -6,9 +6,9 @@
         @click="onClick"
       >
         <div class="flex justify-center w-10 mr-4">
-          <icon-locked class="text-gray-500" v-if="locked" />
-          <icon-done-all class="text-green-600" v-else-if="isDone" />
-          <icon-class class="text-blue-500" v-else />
+          <span v-if="locked" class="text-gray-500"><icon-locked /></span>
+          <span v-else-if="!isDone" class="text-blue-500"><icon-class /></span>
+          <span v-else class="text-green-600"><icon-done-all /></span>
         </div>
         <h3 class="flex-1 truncate text-left text-xl font-semibold">
           <span class="text-base text-gray-400 mr-2">Section {{ number }}</span>
@@ -21,6 +21,7 @@
         </div>
       </button>
     </header>
+
     <!-- Lessons -->
     <ul v-if="!locked && isExpanded">
       <li v-for="(item, i) in lessons" :key="item.number">
@@ -33,6 +34,7 @@
         />
       </li>
     </ul>
+
     <!-- Lesson Indicator -->
     <div v-else>
       <div class="w-10 ml-4">
@@ -52,7 +54,7 @@
         :class="{ 'text-gray-400': !isDone, 'text-green-500': isDone }"
         @click="onClick"
       >
-        <icon-locked class="mr-2" v-if="locked" />
+        <span class="mr-2"><icon-locked v-if="locked"/></span>
         <span>{{ lessonCount }} Lessons</span>
       </button>
     </div>
@@ -75,7 +77,7 @@
         size="40"
       />
       <div v-if="wrongPassphrase" class="text-red-500">
-        <icon-close class="inline" /> Wrong Passphrase!
+        <span><icon-close /></span> Wrong Passphrase!
       </div>
     </modal>
   </article>
@@ -111,8 +113,12 @@ export default {
   data() {
     return {
       isExpanded: true,
-      pending: true,
-      lessons: this.createDummyLessons(this.lessonCount),
+      pending: false,
+      lessons: get(
+        this.section,
+        "fields.lessons",
+        this.createDummyLessons(this.lessonCount)
+      ),
       modalActive: false,
       passphrase: "",
       wrongPassphrase: false
@@ -197,9 +203,11 @@ export default {
       if (!newState) this.wrongPassphrase = false;
     }
   },
-  async mounted() {
+  async created() {
     // Load lessons
+    if (this.lessons.length && this.lessons[0].fields) return;
     if (this.id) {
+      this.pending = true;
       const response = await this.$contentful.getEntry(this.id);
       this.lessons = get(response, "fields.lessons", []);
       this.pending = false;
@@ -207,9 +215,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-/*button {
-  @apply bg-gray-300 text-gray-600 py-1 px-3 rounded;
-}*/
-</style>

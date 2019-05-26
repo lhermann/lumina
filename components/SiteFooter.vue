@@ -4,7 +4,7 @@
       <div class="w-full flex items-center flex-col md:flex-row py-6">
         <div class="mb-6 mr-6">
           <a class="flex items-center no-underline hover:no-underline" href="#">
-            <Logo class="h-8" />
+            <Logo />
             <h1 class="pl-4 font-semibold text-2xl lg:text-4xl">
               {{ pageTitle || uppercase }}
             </h1>
