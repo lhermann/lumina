@@ -27,11 +27,10 @@
         </label>
         <input
           v-model="hashOutput"
-          class="focus:outline-none focus:shadow-outline"
+          class="select-all focus:outline-none focus:shadow-outline"
           type="text"
           readonly
           ref="hash"
-          @click="$refs.hash.select()"
         />
       </div>
     </div>
@@ -68,11 +67,10 @@
           </label>
           <input
             v-model="cipherOutput"
-            class="focus:outline-none focus:shadow-outline"
+            class="select-all focus:outline-none focus:shadow-outline"
             type="text"
             readonly
             ref="cypher"
-            @click="$refs.cypher.select()"
           />
         </div>
       </div>
@@ -108,11 +106,10 @@
           </label>
           <input
             v-model="plaintextOutput"
-            class="focus:outline-none focus:shadow-outline"
+            class="select-all focus:outline-none focus:shadow-outline"
             type="text"
             readonly
             ref="plaintext"
-            @click="$refs.plaintext.select()"
           />
         </div>
       </div>

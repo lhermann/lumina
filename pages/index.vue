@@ -100,12 +100,12 @@ export default {
   },
   async asyncData({ app }) {
     let landing = app.$contentful.getEntries({
-      locale: "ms-MY",
+      locale: app.$locale,
       content_type: "page",
       "fields.key[match]": "home"
     });
     let units = app.$contentful.getEntries({
-      locale: "ms-MY",
+      locale: app.$locale,
       content_type: "unit"
     });
     [landing, units] = await Promise.all([landing, units]);

@@ -63,7 +63,8 @@ export default {
   plugins: [
     "~/plugins/filters.js",
     "~/plugins/contentful.js",
-    "~/plugins/immortal-db.js"
+    "~/plugins/immortal-db.js",
+    "~/plugins/locale.js"
   ],
 
   /*

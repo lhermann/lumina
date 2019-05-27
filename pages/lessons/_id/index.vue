@@ -102,8 +102,11 @@ export default {
     IconClose
   },
   async asyncData({ app, params }) {
-    let lesson = app.$contentful.getEntry(params.id);
-    let section = app.$contentful.getEntries({ links_to_entry: params.id });
+    let lesson = app.$contentful.getEntry(params.id, { locale: app.$locale });
+    let section = app.$contentful.getEntries({
+      links_to_entry: params.id,
+      locale: app.$locale
+    });
     [lesson, section] = await Promise.all([lesson, section]);
     return {
       ...lesson,

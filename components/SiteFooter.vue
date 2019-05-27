@@ -52,7 +52,7 @@ export default {
   methods: {
     pageUrl(page) {
       if (page.fields.key === "home") return "/";
-      return `pages/${page.sys.id}`;
+      return `/pages/${page.sys.id}`;
     }
   }
 };

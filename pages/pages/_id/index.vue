@@ -23,7 +23,7 @@ import get from "lodash/get";
 export default {
   components: { Divider },
   asyncData({ app, params }) {
-    return app.$contentful.getEntry(params.id);
+    return app.$contentful.getEntry(params.id, { locale: app.$locale });
   },
   computed: {
     id() {

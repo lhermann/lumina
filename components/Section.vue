@@ -208,7 +208,9 @@ export default {
     if (this.lessons.length && this.lessons[0].fields) return;
     if (this.id) {
       this.pending = true;
-      const response = await this.$contentful.getEntry(this.id);
+      const response = await this.$contentful.getEntry(this.id, {
+        locale: this.$locale
+      });
       this.lessons = get(response, "fields.lessons", []);
       this.pending = false;
     }

@@ -25,11 +25,11 @@ export const getters = {
 export const actions = {
   async nuxtServerInit({ commit }, { app }) {
     let website = app.$contentful.getEntries({
-      locale: "ms-MY",
+      locale: app.$locale,
       content_type: "website"
     });
     let pages = app.$contentful.getEntries({
-      locale: "ms-MY",
+      locale: app.$locale,
       content_type: "page"
     });
     [website, pages] = await Promise.all([website, pages]);
