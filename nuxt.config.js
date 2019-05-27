@@ -1,5 +1,13 @@
 import pkg from "./package";
 
+const purgecss = require("@fullhuman/postcss-purgecss")({
+  // Specify the paths to all of the template files in your project
+  content: ["./**/*.html", "./**/*.vue"],
+
+  // Include any special characters you're using in this regular expression
+  defaultExtractor: content => content.match(/[A-Za-z0-9-_:/]+/g) || []
+});
+
 export default {
   mode: "universal",
 
@@ -65,12 +73,6 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     // "@nuxtjs/axios"
   ],
-  /*
-   ** Axios module configuration
-   */
-  axios: {
-    // See https://github.com/nuxt-community/axios-module#options
-  },
 
   /*
    ** Build configuration
@@ -80,7 +82,8 @@ export default {
     postcss: {
       plugins: [
         require("tailwindcss")("tailwind.config.js"),
-        require("autoprefixer")
+        require("autoprefixer"),
+        ...(process.env.NODE_ENV === "production" ? [purgecss] : [])
       ]
     }
     // extend(config, ctx) {}
