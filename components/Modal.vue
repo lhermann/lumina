@@ -43,12 +43,14 @@ export default {
     title: { type: String, default: "" },
     action: { type: String, default: "" }
   },
+  computed: {
+    lnClose() {
+      return this.$store.getters["localisation/get"]("close");
+    }
+  },
   methods: {
     close() {
       this.$emit("update:active", false);
-    },
-    lnClose() {
-      return this.$store.getters["localisation/get"]("close");
     }
   }
 };
