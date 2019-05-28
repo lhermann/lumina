@@ -74,9 +74,22 @@ export default {
    ** Nuxt.js modules
    */
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage
+    "@bazzite/nuxt-netlify"
     // "@nuxtjs/axios"
   ],
+
+  netlify: {
+    mergeSecurityHeaders: true,
+    redirects: [
+      {
+        from: "/lessons",
+        to: "/lessons",
+        query: {
+          id: ":id"
+        }
+      }
+    ]
+  },
 
   /*
    ** Build configuration
