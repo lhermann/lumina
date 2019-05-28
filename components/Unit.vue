@@ -1,7 +1,7 @@
 <template>
   <section>
-    <p class="font-semibold text-brand-400">UNIT #{{ number }}</p>
-    <h2 class="mb-4">{{ title }}</h2>
+    <p class="font-semibold text-brand-400">{{ lnUnit }} #{{ number }}</p>
+    <h2 class="text-4xl font-semibold leading-tight mb-4">{{ title }}</h2>
     <p class="text-lg font-light text-gray-600 mb-6">{{ description }}</p>
     <section-component
       class="mb-6"
@@ -33,13 +33,10 @@ export default {
     },
     sections() {
       return get(this.unit, "fields.sections");
+    },
+    lnUnit() {
+      return this.$store.getters["localisation/get"]("unit").toUpperCase();
     }
   }
 };
 </script>
-
-<style scoped>
-h2 {
-  @apply text-4xl font-semibold leading-tight;
-}
-</style>

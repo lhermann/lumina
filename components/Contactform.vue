@@ -14,7 +14,7 @@
           class="block uppercase tracking-wide text-xs font-bold mb-2"
           for="name"
         >
-          Name
+          {{ ln.name }}
         </label>
         <input
           class="appearance-none block w-full bg-gray-200 text-gray-700 rounded py-3 px-4 mb-3 focus:outline-none focus:bg-white"
@@ -29,7 +29,7 @@
           class="block uppercase tracking-wide text-xs font-bold mb-2"
           for="email"
         >
-          Email
+          {{ ln.email }}
         </label>
         <input
           class="appearance-none block w-full bg-gray-200 text-gray-700 rounded py-3 px-4 focus:outline-none focus:bg-white focus:border-gray-500"
@@ -46,7 +46,7 @@
         class="block uppercase tracking-wide text-xs font-bold mb-2"
         for="message"
       >
-        Message
+        {{ ln.message }}
       </label>
       <textarea
         class="appearance-none block w-full bg-gray-200 text-gray-700 rounded py-3 px-4 mb-3 focus:outline-none focus:bg-white focus:border-gray-500"
@@ -62,8 +62,22 @@
         class="bg-white text-gray-800 font-bold rounded border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500 hover:text-white shadow-md py-2 px-6"
         type="submit"
       >
-        Send
+        {{ ln.send }} <icon-send />
       </button>
     </div>
   </form>
 </template>
+
+<script>
+import IconSend from "~/components/icons/Class";
+import { mapGetters } from "vuex";
+
+export default {
+  components: { IconSend },
+  computed: {
+    ...mapGetters({
+      ln: "localisation/all"
+    })
+  }
+};
+</script>

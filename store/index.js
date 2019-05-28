@@ -23,13 +23,14 @@ export const getters = {
  ************************************/
 
 export const actions = {
-  async nuxtServerInit({ commit }, { app }) {
-    let website = app.$contentful.getEntries({
-      locale: app.$locale,
+  async nuxtServerInit({ dispatch, commit }, context) {
+    dispatch("localisation/serverInit", context);
+    let website = context.app.$contentful.getEntries({
+      locale: context.app.$locale,
       content_type: "website"
     });
-    let pages = app.$contentful.getEntries({
-      locale: app.$locale,
+    let pages = context.app.$contentful.getEntries({
+      locale: context.app.$locale,
       content_type: "page"
     });
     [website, pages] = await Promise.all([website, pages]);

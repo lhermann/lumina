@@ -11,11 +11,13 @@
           <span v-else class="text-green-600"><icon-done-all /></span>
         </div>
         <h3 class="flex-1 truncate text-left text-xl font-semibold">
-          <span class="text-base text-gray-400 mr-2">Section {{ number }}</span>
+          <span class="text-base text-gray-400 mr-2"
+            >{{ ln.section }} {{ number }}</span
+          >
           {{ locked ? "Locked" : title }}
         </h3>
         <div class="bg-gray-200 text-gray-600 py-1 px-2 rounded">
-          <span v-if="locked">Unlock</span>
+          <span v-if="locked">{{ ln.unlock }}</span>
           <icon-collapse v-else-if="isExpanded" />
           <icon-expand v-else />
         </div>
@@ -55,7 +57,7 @@
         @click="onClick"
       >
         <span class="mr-2"><icon-locked v-if="locked"/></span>
-        <span>{{ lessonCount }} Lessons</span>
+        <span>{{ lessonCount }} {{ ln.lessons }}</span>
       </button>
     </div>
 
@@ -67,7 +69,7 @@
       @action="onUnlock"
     >
       <label class="font-semibold" for="password">
-        Enter the Passphrase for Section {{ number }}
+        {{ ln.enterThePassphraseFor }} {{ ln.section }} {{ number }}
       </label>
       <input
         v-model="passphrase"
@@ -77,7 +79,7 @@
         size="40"
       />
       <div v-if="wrongPassphrase" class="text-red-500">
-        <span><icon-close /></span> Wrong Passphrase!
+        <span><icon-close /></span> {{ ln.wrongPassphrase }}
       </div>
     </modal>
   </article>
@@ -95,6 +97,7 @@ import IconClose from "~/components/icons/Close";
 import sha256 from "crypto-js/sha256";
 import get from "lodash/get";
 import fill from "lodash/fill";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -125,6 +128,9 @@ export default {
     };
   },
   computed: {
+    ...mapGetters({
+      ln: "localisation/all"
+    }),
     isDone() {
       return (
         this.lessons.length &&

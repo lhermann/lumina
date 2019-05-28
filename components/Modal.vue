@@ -25,7 +25,7 @@
             class="py-2 px-6 border-red-500 hover:bg-gray-300"
             @click="close"
           >
-            Close
+            {{ lnClose }}
           </button>
         </footer>
       </section>
@@ -46,6 +46,9 @@ export default {
   methods: {
     close() {
       this.$emit("update:active", false);
+    },
+    lnClose() {
+      return this.$store.getters["localisation/get"]("close");
     }
   }
 };
