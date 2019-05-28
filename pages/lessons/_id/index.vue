@@ -101,12 +101,19 @@ export default {
     IconLocked,
     IconClose
   },
-  async asyncData({ app, params }) {
-    let lesson = app.$contentful.getEntry(params.id, { locale: app.$locale });
+  async asyncData({ app, params, payload }) {
+    // fetch lesson
+    let lesson;
+    if (payload) lesson = Promise.resolve(payload);
+    else lesson = app.$contentful.getEntry(params.id, { locale: app.$locale });
+
+    // fetch section
     let section = app.$contentful.getEntries({
       links_to_entry: params.id,
       locale: app.$locale
     });
+
+    // await both
     [lesson, section] = await Promise.all([lesson, section]);
     return {
       ...lesson,

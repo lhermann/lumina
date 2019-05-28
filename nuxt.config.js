@@ -1,4 +1,5 @@
 import pkg from "./package";
+import * as contentful from "contentful";
 
 const purgecss = require("@fullhuman/postcss-purgecss")({
   // Specify the paths to all of the template files in your project
@@ -74,22 +75,11 @@ export default {
    ** Nuxt.js modules
    */
   modules: [
-    "@bazzite/nuxt-netlify"
+    // "@bazzite/nuxt-netlify"
     // "@nuxtjs/axios"
   ],
 
-  netlify: {
-    mergeSecurityHeaders: true,
-    redirects: [
-      {
-        from: "/lessons",
-        to: "/lessons",
-        query: {
-          id: ":id"
-        }
-      }
-    ]
-  },
+  netlify: { mergeSecurityHeaders: true },
 
   /*
    ** Build configuration
@@ -99,10 +89,47 @@ export default {
     postcss: {
       plugins: [
         require("tailwindcss")("tailwind.config.js"),
-        require("autoprefixer"),
-        ...(process.env.NODE_ENV === "production" ? [purgecss] : [])
+        require("autoprefixer")
+        // ...(process.env.NODE_ENV === "production" ? [purgecss] : [])
       ]
     }
     // extend(config, ctx) {}
+  },
+
+  generate: {
+    interval: 100,
+    routes: async function() {
+      // Setup contentful
+      const api = contentful.createClient({
+        space: process.env.NUXT_ENV_SPACE_ID,
+        accessToken: process.env.NUXT_ENV_ACCESS_TOKEN
+      });
+
+      // fetch lessons
+      let lessons = api.getEntries({
+        locale: process.env.NUXT_ENV_LOCALE || "en-US",
+        content_type: "lesson"
+      });
+
+      // fetch pages
+      let pages = api.getEntries({
+        locale: process.env.NUXT_ENV_LOCALE || "en-US",
+        content_type: "page"
+      });
+
+      // await both
+      [lessons, pages] = await Promise.all([lessons, pages]);
+
+      return [
+        ...lessons.items.map(lesson => ({
+          route: "/lessons/" + lesson.sys.id,
+          payload: lesson
+        })),
+        ...pages.items.map(page => ({
+          route: "/pages/" + page.sys.id,
+          payload: page
+        }))
+      ];
+    }
   }
 };
