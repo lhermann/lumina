@@ -89,8 +89,8 @@ export default {
     postcss: {
       plugins: [
         require("tailwindcss")("tailwind.config.js"),
-        require("autoprefixer")
-        // ...(process.env.NODE_ENV === "production" ? [purgecss] : [])
+        require("autoprefixer"),
+        ...(process.env.NODE_ENV === "production" ? [purgecss] : [])
       ]
     }
     // extend(config, ctx) {}

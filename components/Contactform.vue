@@ -59,17 +59,18 @@
     </div>
     <div class="text-center">
       <button
-        class="bg-white text-gray-800 font-bold rounded border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500 hover:text-white shadow-md py-2 px-6"
+        class="bg-white text-gray-800 font-bold rounded border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500 hover:text-white shadow-md py-2 px-6 inline-flex items-center"
         type="submit"
       >
-        {{ ln.send }} <icon-send />
+        <span class="mr-2">{{ ln.send }}</span>
+        <icon-send />
       </button>
     </div>
   </form>
 </template>
 
 <script>
-import IconSend from "~/components/icons/Class";
+import IconSend from "~/components/icons/Send";
 import { mapGetters } from "vuex";
 
 export default {
