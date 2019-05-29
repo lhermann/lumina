@@ -41,7 +41,7 @@
       <div class="px-8 md:px-16">
         <header class="mb-8">
           <h1 class="my-2 text-center text-gray-800">
-            Lessons
+            {{ ln.sections }}
           </h1>
           <div class="h-1 mx-auto gradient w-64 opacity-25 rounded-t"></div>
         </header>
@@ -64,7 +64,7 @@
     <!-- Call to Action -->
     <section class="container mx-auto text-center text-white py-6 mb-12">
       <h1 class="w-full my-2 text-5xl font-bold leading-tight">
-        Get in contact with us
+        {{ ln.getInContactWithUs }}
       </h1>
       <div class="w-full mb-4">
         <div
@@ -121,7 +121,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      pageTitle: "title"
+      pageTitle: "title",
+      ln: "localisation/all"
     })
   },
   methods: {

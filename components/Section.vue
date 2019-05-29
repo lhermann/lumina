@@ -11,9 +11,9 @@
           <span v-else class="text-green-600"><icon-done-all /></span>
         </div>
         <h3 class="flex-1 truncate text-left text-xl font-semibold">
-          <span class="text-base text-gray-400 mr-2"
-            >{{ ln.section }} {{ number }}</span
-          >
+          <span class="text-base text-gray-400 mr-2">
+            {{ ln.section }} {{ number }}
+          </span>
           {{ locked ? "Locked" : title }}
         </h3>
         <div class="bg-gray-200 text-gray-600 py-1 px-2 rounded">
