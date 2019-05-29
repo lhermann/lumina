@@ -97,6 +97,7 @@ export default {
   },
 
   generate: {
+    fallback: true,
     interval: 100,
     routes: async function() {
       // Setup contentful
