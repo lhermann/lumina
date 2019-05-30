@@ -15,7 +15,7 @@
     "@bazzite/nuxt-netlify": "^0.1.0",
     "@contentful/rich-text-html-renderer": "^13.1.0",
     "@fullhuman/postcss-purgecss": "^1.2.0",
-    "@nuxtjs/axios": "^5.5.1",
+    "@nuxtjs/axios": "^5.5.2",
     "contentful": "^7.6.0",
     "cross-env": "^5.2.0",
     "crypto-js": "^3.1.9-1",
@@ -31,11 +31,11 @@
     "eslint-config-prettier": "^4.3.0",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-vue": "^5.2.2",
-    "nodemon": "^1.19.0",
+    "nodemon": "^1.19.1",
     "prettier": "^1.17.1",
     "require-extension-hooks": "^0.3.3",
     "require-extension-hooks-babel": "^0.1.1",
     "require-extension-hooks-vue": "^2.0.0",
-    "tailwindcss": "^1.0.1"
+    "tailwindcss": "^1.0.2"
   }
 }
