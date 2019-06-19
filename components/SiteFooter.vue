@@ -3,12 +3,15 @@
     <div class="container mx-auto px-8">
       <div class="w-full flex items-center flex-col md:flex-row py-6">
         <div class="mb-6 mr-6">
-          <a class="flex items-center no-underline hover:no-underline" href="#">
+          <nuxt-link
+            to="/"
+            class="flex items-center no-underline hover:no-underline"
+          >
             <Logo />
             <h1 class="pl-4 font-semibold text-2xl lg:text-4xl">
               {{ pageTitle || uppercase }}
             </h1>
-          </a>
+          </nuxt-link>
         </div>
 
         <div v-for="page in pages" :key="page.sys.id" class="mb-6 mr-6">
