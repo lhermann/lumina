@@ -64,8 +64,8 @@
     <!-- Passphrase Modal -->
     <modal
       :active.sync="modalActive"
-      title="Unlock Section"
-      action="Unlock"
+      :title="ln.unlockSection"
+      :action="ln.unlock"
       @action="onUnlock"
     >
       <label class="font-semibold" for="password">

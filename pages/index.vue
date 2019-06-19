@@ -1,15 +1,16 @@
 <template>
   <section>
     <!--Hero-->
-    <div class="pt-16 pb-3 text-white">
+    <div class="pt-16 pb-3">
       <div
-        class="container px-3 mx-auto flex flex-wrap flex-col md:flex-row items-center px-8"
+        class="px-3 mx-auto flex flex-wrap flex-col md:flex-row items-center px-8"
       >
         <!--Left Col-->
         <div
-          class="flex flex-col w-full md:w-1/2 justify-center items-start text-center md:text-left md:px-12"
+          class="flex flex-col w-full md:w-3/5 xl:w-1/2 justify-center items-start text-center md:text-left md:px-12"
         >
-          <component
+          <div class="hero content" v-html="htmlContent"></div>
+          <!-- <component
             v-for="(item, i) in content"
             :key="i"
             :is="tag(item.nodeType)"
@@ -20,11 +21,11 @@
             class="leading-normal text-2xl"
           >
             {{ item.content[0].value }}
-          </component>
+          </component> -->
         </div>
 
         <!--Right Col-->
-        <div class="w-full md:w-1/2 md:px-12 text-center">
+        <div class="w-full md:w-2/5 xl:w-1/2 xl:px-12 text-center">
           <!-- <img class="w-full md:w-4/5 z-50" src="/hero.png" /> -->
           <img class="inline" src="/hero-illustration.svg" />
         </div>
@@ -87,8 +88,9 @@
 import Divider from "~/components/layout/Divider";
 import Unit from "~/components/Unit";
 import Contactform from "~/components/Contactform";
-import first from "lodash/first";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import { mapGetters } from "vuex";
+import first from "lodash/first";
 
 export default {
   components: { Divider, Unit, Contactform },
@@ -110,7 +112,7 @@ export default {
     });
     [landing, units] = await Promise.all([landing, units]);
     return {
-      content: first(landing.items).fields.content.content,
+      content: first(landing.items).fields.content,
       units: units.items.sort((a, b) => a.fields.number - b.fields.number)
     };
   },
@@ -123,7 +125,10 @@ export default {
     ...mapGetters({
       pageTitle: "title",
       ln: "localisation/all"
-    })
+    }),
+    htmlContent() {
+      return documentToHtmlString(this.content);
+    }
   },
   methods: {
     tag(nodeType) {
@@ -138,8 +143,14 @@ export default {
 };
 </script>
 
-<style scoped>
-h1 {
-  @apply text-5xl font-bold leading-tight;
+<style>
+.hero {
+  @apply text-white text-xl;
 }
+.hero h1 {
+  @apply text-4xl font-bold leading-tight mt-0 border-0;
+}
+/*.hero p {
+  @apply leading-normal text-2xl;
+}*/
 </style>
