@@ -111,6 +111,25 @@ export default {
       content_type: "unit"
     });
     [landing, units] = await Promise.all([landing, units]);
+
+    // Print unit and section names
+    // const temp = units.items.sort((a, b) => a.fields.number - b.fields.number);
+    // for (const unit of temp) {
+    //   console.log(`Unit ${unit.fields.number} ${unit.fields.title}`);
+    //   for (const section of unit.fields.sections) {
+    //     console.log(`Section ${section.fields.number} ${section.fields.title}`);
+    //   }
+    // }
+
+    // Print lesson names
+    // let lessons = await app.$contentful.getEntries({
+    //   locale: app.$locale,
+    //   content_type: "lesson"
+    // });
+    // for (const lesson of lessons.items) {
+    //   console.log(`Lesson ${lesson.fields.number} ${lesson.fields.title}`);
+    // }
+
     return {
       content: first(landing.items).fields.content,
       units: units.items.sort((a, b) => a.fields.number - b.fields.number)
