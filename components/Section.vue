@@ -14,7 +14,7 @@
           <span class="text-base text-gray-400 mr-2">
             {{ ln.section }} {{ number }}
           </span>
-          {{ locked ? "Locked" : title }}
+          {{ locked ? ln.locked : title }}
         </h3>
         <div class="bg-gray-200 text-gray-600 py-1 px-2 rounded">
           <span v-if="locked">{{ ln.unlock }}</span>
