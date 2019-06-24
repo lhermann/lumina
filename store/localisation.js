@@ -28,7 +28,7 @@ export const actions = {
       locale: app.$locale,
       content_type: "localisation"
     });
-    console.log(get(localisations.items[0], "fields", {}));
+    // console.log(get(localisations.items[0], "fields", {}));
     commit("setLocaisation", get(localisations.items[0], "fields", {}));
   }
 };

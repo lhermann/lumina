@@ -3,6 +3,7 @@
     <SiteHeader />
     <nuxt />
     <SiteFooter />
+    <div v-html="trackingScript"></div>
   </div>
 </template>
 
@@ -11,7 +12,12 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
 export default {
-  components: { SiteHeader, SiteFooter }
+  components: { SiteHeader, SiteFooter },
+  computed: {
+    trackingScript() {
+      return process.env.NUXT_ENV_TRACKING_SCRIPT || "";
+    }
+  }
 };
 </script>
 
