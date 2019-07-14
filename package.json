@@ -12,16 +12,16 @@
     "test": "ava"
   },
   "dependencies": {
-    "@bazzite/nuxt-netlify": "^0.1.0",
+    "@bazzite/nuxt-netlify": "^0.1.1",
     "@contentful/rich-text-html-renderer": "^13.1.0",
     "@fullhuman/postcss-purgecss": "^1.2.0",
-    "@nuxtjs/axios": "^5.5.2",
-    "contentful": "^7.6.0",
+    "@nuxtjs/axios": "^5.5.4",
+    "contentful": "^7.8.1",
     "cross-env": "^5.2.0",
     "crypto-js": "^3.1.9-1",
     "immortal-db": "^1.0.2",
-    "lodash": "^4.17.11",
-    "nuxt": "^2.7.1"
+    "lodash": "^4.17.14",
+    "nuxt": "^2.8.1"
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.27",
@@ -30,12 +30,12 @@
     "browser-env": "^3.2.5",
     "eslint-config-prettier": "^4.3.0",
     "eslint-plugin-prettier": "^3.1.0",
-    "eslint-plugin-vue": "^5.2.2",
+    "eslint-plugin-vue": "^5.2.3",
     "nodemon": "^1.19.1",
-    "prettier": "^1.17.1",
+    "prettier": "^1.18.2",
     "require-extension-hooks": "^0.3.3",
     "require-extension-hooks-babel": "^0.1.1",
     "require-extension-hooks-vue": "^2.0.0",
-    "tailwindcss": "^1.0.2"
+    "tailwindcss": "^1.0.5"
   }
 }
