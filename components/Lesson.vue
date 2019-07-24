@@ -14,11 +14,11 @@
         ></div>
       </div>
     </div>
-    <button
+    <nuxt-link
       class="w-full flex items-center bg-white rounded shadow-md px-4"
       :class="{ 'opacity-50': placeholder, 'hover:bg-gray-100': !placeholder }"
       :disabled="placeholder"
-      @click="onClick"
+      :to="`/lessons/${id}`"
     >
       <div class="w-10 mr-4">
         <div
@@ -53,7 +53,7 @@
       </div>
       <icon-wait v-if="placeholder" />
       <icon-arrow-right v-else />
-    </button>
+    </nuxt-link>
   </div>
 </template>
 

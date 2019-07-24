@@ -15,6 +15,8 @@ export const state = () => ({
 
 export const getters = {
   title: state => get(state, "website.title", ""),
+  heroImages: state => get(state, "website.heroImage", []),
+  heroLink: state => get(state, "website.heroLink", ""),
   pages: state => state.pages
 };
 
@@ -34,6 +36,7 @@ export const actions = {
       content_type: "page"
     });
     [website, pages] = await Promise.all([website, pages]);
+    console.log(website.items[0].fields);
     commit("setWebsite", get(website.items[0], "fields", {}));
     commit("setPages", pages.items);
   },
